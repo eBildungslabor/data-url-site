@@ -8,22 +8,100 @@
     <title>Shareable page</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/css-toggle-switch@latest/dist/toggle-switch.css">
+    <style>
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        body {
+            color: #ffffff;
+            background-color: #484848;
+            font-family: sans-serif;
+        }
+
+        .header-hold {
+            width: 100%;
+            position: relative;
+            height: 200px;
+        }
+
+        .header {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            font-size: 3em;
+            width: 100%;
+            transform: translate(0%, -50%);
+        }
+
+        .sub {
+            font-size: 0.5em;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .jodit_container {
+            color: #000000;
+        }
+        .name{
+            font-size: 1.5em;
+        }
+        .output{
+            display: block;
+            width: 100%;
+        }
+        .section{
+            margin: 8px 0px;
+        }
+    </style>
 </head>
 
 <body>
-    <textarea id="editor" name="editor"></textarea>
-    Make Linkable:<input type="checkbox" id="linkable" checked><br>
-    output:<br>
-    <textarea id="output"></textarea>
-    <script>
-        var editor = new Jodit('#editor');
-        editor.value = '';
-        editor.events.on('change', update)
-        function update () {
-            document.getElementById('output').value=(document.getElementById('linkable').checked?'https://initd-daemon.github.io/data-url#':'data:')+"text/html;base64,"+btoa(editor.value)
-        }
-        document.getElementById('linkable').onchange = update
-    </script>
+    <div class="header-hold">
+        <div class="header">
+            Shareable page
+            <br>
+            <div class="sub">Create a shareable webpage without having to store data on a remote server</div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <textarea id="editor" name="editor"></textarea>
+        </div>
+        <div class="section">
+            <span class="name">Create shareable link</span><br>
+            Most platforms do not allow the sharing of data URLs, to get around this the URL can be prefixed with initd-daemon.github.io/data-url#. initd-daemon.github.io/data-url will then inject the data from the link into the page, it will however never receive the contents of the link as anything after a # in the URL is not sent to the server.
+            <label class="switch-light switch-material">
+                <input type="checkbox" checked id="linkable">
+                <span>
+                    <span>No</span>
+                    <span>Yes</span>
+                    <a></a>
+                </span>
+            </label>
+        </div>
+        <div class="section">
+            <span class="name">Link</span>
+            <textarea id="output" class="output"></textarea>
+        </div>
+        <script>
+            var editor = new Jodit('#editor');
+            editor.value = '';
+            editor.events.on('change', update)
+            function update() {
+                document.getElementById('output').value = (document.getElementById('linkable').checked ? 'https://initd-daemon.github.io/data-url#' : 'data:') + "text/html;base64," + btoa(editor.value)
+            }
+            document.getElementById('linkable').onchange = update
+        </script>
+    </div>
+
 </body>
 
 </html>
