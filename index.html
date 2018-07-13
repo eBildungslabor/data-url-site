@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shareable page</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.js"></script>
+</head>
+
+<body>
+    <textarea id="editor" name="editor"></textarea>
+    Make Linkable:<input type="checkbox" id="linkable" checked><br>
+    output:<br>
+    <textarea id="output"></textarea>
+    <script>
+        var editor = new Jodit('#editor');
+        editor.value = '';
+        editor.events.on('change', update)
+        function update () {
+            document.getElementById('output').value=(document.getElementById('linkable').checked?'https://initd-daemon.github.io/data-url#':'data:')+"text/html;base64,"+btoa(editor.value)
+        }
+        document.getElementById('linkable').onchange = update
+    </script>
+</body>
+
+</html>
